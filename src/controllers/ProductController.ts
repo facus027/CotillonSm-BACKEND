@@ -19,13 +19,39 @@ export class ProductController {
             const products = await Product.findAll({
                 order: [
                     ['category', 'DESC']
-                ]
+                ],
+                attributes: { exclude: ['createdAt',"updatedAt"] },
             })
             res.json(products);
         } catch (error) {
             res.status(500).json({ error : 'Hubo un Error'});
         }
     }
+
+    static getPaginatedProducts = async (req: Request, res: Response) => {
+        const { page = 1, pageSize = 28 } = req.query;
+      
+        const limit = parseInt(pageSize as string);
+        const offset = (parseInt(page as string) - 1) * limit;
+      
+        try {
+          const { rows: products, count: totalItems } = await Product.findAndCountAll({
+            limit,
+            offset,
+          });
+      
+          const totalPages = Math.ceil(totalItems / limit);
+      
+          return res.json({
+            totalItems,
+            totalPages,
+            currentPage: parseInt(page as string),
+            products,
+          });
+        } catch (error) {
+          return res.status(500).json({ message: 'Error fetching products', error });
+        }
+      };
 
     static getProductById = async (req:Request,res:Response) => {
       
@@ -54,8 +80,15 @@ export class ProductController {
                 })
             }
 
-             // Actualizar
-            await product.update(req.body)
+            // Actualizar
+            const newproduct=new Product()
+            newproduct.name = req.body.name
+            newproduct.description = req.body.description
+            newproduct.price = req.body.price
+            newproduct.image = product.dataValues.image
+            newproduct.category = req.body.category
+            newproduct.availability = req.body.availability
+            await product.update(newproduct)
             await product.save()
 
             res.send('Producto Actualizado')
@@ -112,7 +145,6 @@ export class ProductController {
     static getAllCastegory = async (req:Request,res:Response) => {
       
         const {category} = req.params
-        const percent = req.body.percent
         
         try {
             const products = await Product.findAll({

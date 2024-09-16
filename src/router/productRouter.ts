@@ -8,6 +8,8 @@ const router = Router()
 
 router.get('/', ProductController.getAllProduct)
 
+router.get('/pagina', ProductController.getPaginatedProducts)
+
 router.post('/',
     body("name")
     .notEmpty()
@@ -46,9 +48,6 @@ router.put('/:productId',
         .isNumeric().withMessage('Valor no válido')
         .notEmpty().withMessage('El precio de Producto no puede ir vacio')
         .custom(value => value > 0).withMessage('Precio no válido'),
-    body("image")
-        .notEmpty()
-        .withMessage("La imagen del Producto es Obligatorio"),
     body("category")
         .notEmpty()
         .withMessage("La categoria del Producto es Obligatorio"),

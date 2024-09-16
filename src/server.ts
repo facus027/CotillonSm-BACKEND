@@ -1,16 +1,18 @@
 import express from "express";
 import productRouter from "./router/productRouter";
+import orderRouter from "./router/orderRouter";
 import db from "./config/db";
 import cors from 'cors'
 import { corsConfig } from './config/cors'
 import colors from 'colors'
 import bodyParser from 'body-parser';
 
+
 //conection DB
 async function connectDB() {
     try {
         await db.authenticate()
-        db.sync()
+         db.sync()
         console.log(colors.blue.bold('Conexion exitosa a la base de datos'))
     } catch (error) {
         console.log(error)
@@ -29,5 +31,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //Routing
 app.use('/api/products',productRouter)
+app.use('/api/order',orderRouter)
 
 export default app

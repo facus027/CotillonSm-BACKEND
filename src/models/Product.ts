@@ -1,13 +1,21 @@
-import { Table, Column, Model, DataType, Default } from 'sequelize-typescript'
+import { Table, Column, Model, DataType, Default} from 'sequelize-typescript'
 
 
-const categories = ['Reposteria','Decoracion','Carnaval','Globos','Golosinas','Souvenirs','Decoracion Torta','Combos','Fiestas Patrias','Disfrases']
+interface IProduct {
+    name: string,
+    description: string,
+    price: number,
+    availability: boolean,
+    image: string,
+    category: string,
+ 
+}
 
 @Table({
     tableName:'products'
 })
 
-class Product extends Model {
+class Product extends Model<IProduct,IProduct> {
 
     @Column({
         type: DataType.STRING(100)
@@ -39,6 +47,8 @@ class Product extends Model {
         type: DataType.ENUM('reposteria','decoracion','carnaval','globos','golosinas','souvenirs','decoracion Torta','combos','fiestas Patrias','disfrases'),
     })
     category: string
+
+  
 }
 
 export default Product
