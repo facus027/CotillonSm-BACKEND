@@ -1,6 +1,7 @@
 import express from "express";
 import productRouter from "./router/productRouter";
 import orderRouter from "./router/orderRouter";
+import recipeRoute from "./router/recipeRouter";
 import db from "./config/db";
 import cors from 'cors'
 import { corsConfig } from './config/cors'
@@ -31,6 +32,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //Routing
 app.use('/api/products',productRouter)
-app.use('/api/order',orderRouter)
+app.use('/api/order', orderRouter)
+app.use('/api/recipes',recipeRoute)
 
 export default app

@@ -1,6 +1,5 @@
 import { Table, Column, Model, DataType, Default} from 'sequelize-typescript'
 
-
 interface IProduct {
     name: string,
     description: string,
@@ -8,7 +7,7 @@ interface IProduct {
     availability: boolean,
     image: string,
     category: string,
- 
+
 }
 
 @Table({
