@@ -22,16 +22,16 @@ router.post('/',
     OrderController.createOrder
 )
 
-router.put('/status/:orderId',
+router.patch('/status/:orderId',
     param('orderId')
-        .notEmpty()
-        .withMessage('El Id de la order es obligatoria'),
+      .notEmpty()
+      .withMessage('El Id de la orden es obligatorio'),
     body('status')
-        .notEmpty()
-        .withMessage('El nuevo estado es obligatorio'),
+      .notEmpty()
+      .withMessage('El nuevo estado es obligatorio'),
     handlerInputErrors,
     OrderController.OrderUpdateStatus
-)
+  );
 
 router.get('/cel/:cel',
     param('cel')

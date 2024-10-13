@@ -4,112 +4,101 @@ import { param } from "express-validator";
 
 export class OrderController {
 
-    static createOrder = async (req:Request,res:Response) => {
+    static createOrder = async (req: Request, res: Response) => {
         try {
             const cel = req.body.cel
             const order = new Order(req.body);
             await order.save();
             res.send(cel)
         } catch (error) {
-            res.status(500).json({ error : 'Hubo un Error'});
+            res.status(500).json({ error: 'Hubo un Error' });
         }
     }
 
-    static OrderUpdateStatus = async (req:Request,res:Response) => {
-        
+    static OrderUpdateStatus = async (req: Request, res: Response) => {
+
         try {
-            const {orderId} = req.params
-            const status = req.body.status
+
+            const { orderId } = req.params;
+            const status = req.body.status;
+
             const order = await Order.findByPk(orderId)
 
-            if(!order) {
-                return res.status(404).json({
-                    error: 'Orden No Encontrada'
-                })
+            if (!order) {
+                return res.status(404).json({ error: 'Orden No Encontrada' })
             }
 
-            //Actualizar
-            const newOrder = new Order()
+            await order.update({ status })
 
-            newOrder.name = order.dataValues.name
-            newOrder.cel = order.dataValues.cel
-            newOrder.wayToPay = order.dataValues.wayToPay
-            newOrder.total = order.dataValues.total
-            newOrder.order = order.dataValues.order
-            newOrder.date = order.dataValues.date
-            newOrder.status = status
+            res.send(status);
 
-            await order.update(newOrder)
-            await order.save()
-
-            res.send(`El estado fue modificado a '${status}'`);
         } catch (error) {
-            res.status(500).json({ error : 'Hubo un Error'});
+            res.status(500).json({ error: 'Hubo un Error' });
         }
     }
 
-    static getOrderByCel = async (req:Request,res:Response) => {
-        const {cel} = req.params
-        
+    static getOrderByCel = async (req: Request, res: Response) => {
+        const { cel } = req.params
+
         try {
             const order = await Order.findOne({
                 where: {
-                    'cel':cel
+                    'cel': cel
                 }
             })
-            if(!order) {
+            if (!order) {
                 return res.status(404).json({
                     error: 'Orden No Encontrada'
                 })
             }
             res.json(order);
         } catch (error) {
-            res.status(500).json({ error : 'Hubo un Error'});
+            res.status(500).json({ error: 'Hubo un Error' });
         }
     }
 
-    static getOrderAll = async (req:Request,res:Response) => {
-        
+    static getOrderAll = async (req: Request, res: Response) => {
+
         try {
-            const orders = await Order.findAll({ })
+            const orders = await Order.findAll({})
             res.json(orders);
         } catch (error) {
-            res.status(500).json({ error : 'Hubo un Error'});
+            res.status(500).json({ error: 'Hubo un Error' });
         }
     }
 
-    static getOrderByStatus = async (req:Request,res:Response) => {
-        
+    static getOrderByStatus = async (req: Request, res: Response) => {
+
         try {
-            const {status} = req.params
+            const { status } = req.params
             const orders = await Order.findAll({
                 where: {
-                    'status':status
+                    'status': status
                 }
             })
             res.json(orders);
         } catch (error) {
-            res.status(500).json({ error : 'Hubo un Error'});
+            res.status(500).json({ error: 'Hubo un Error' });
         }
     }
 
-    static getOrderByWayToPay = async (req:Request,res:Response) => {
-        
+    static getOrderByWayToPay = async (req: Request, res: Response) => {
+
         try {
             const { wayToPay } = req.params
-            
+
             const orders = await Order.findAll({
                 where: {
-                    'wayToPay':wayToPay
+                    'wayToPay': wayToPay
                 }
             })
             res.json(orders);
         } catch (error) {
-            res.status(500).json({ error : 'Hubo un Error'});
+            res.status(500).json({ error: 'Hubo un Error' });
         }
     }
 
-    static deleteOrderById = async (req: Request, res: Response) => { 
+    static deleteOrderById = async (req: Request, res: Response) => {
 
         try {
             const { orderId } = req.params
@@ -122,7 +111,7 @@ export class OrderController {
             await order.destroy()
             res.send('Orden Eliminada')
         } catch (error) {
-            res.status(500).json({ error : 'Hubo un Error'});
+            res.status(500).json({ error: 'Hubo un Error' });
         }
     }
 
