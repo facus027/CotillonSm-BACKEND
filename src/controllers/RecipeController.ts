@@ -4,7 +4,7 @@ import { where } from "sequelize";
 
 export class RecipeController {
   
-  // Crear receta
+  
   static createRecipe = async (req: Request, res: Response) => {
     const recipe = new Recipe(req.body);
     try {
@@ -15,7 +15,7 @@ export class RecipeController {
     }
   };
 
-  // Obtener todas las recetas
+  
   static getAllRecipes = async (req: Request, res: Response) => {
     try {
       const recipes = await Recipe.findAll({
@@ -28,7 +28,7 @@ export class RecipeController {
     }
   };
 
-  // Obtener receta por ID
+  
   static getRecipeById = async (req: Request, res: Response) => {
     try {
       const { recipeId } = req.params;
@@ -42,7 +42,7 @@ export class RecipeController {
     }
   };
 
-  // Actualizar receta
+  
   static updateRecipe = async (req: Request, res: Response) => {
     try {
       const { recipeId } = req.params;
@@ -58,7 +58,7 @@ export class RecipeController {
     }
   };
 
-  // Eliminar receta
+  
   static deleteRecipe = async (req: Request, res: Response) => {
     try {
       const { recipeId } = req.params;

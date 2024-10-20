@@ -1,4 +1,4 @@
-import { Table, Column, Model, DataType, Default} from 'sequelize-typescript'
+import { Table, Column, Model, DataType, Default } from 'sequelize-typescript'
 
 interface IProduct {
     name: string,
@@ -11,10 +11,10 @@ interface IProduct {
 }
 
 @Table({
-    tableName:'products'
+    tableName: 'products'
 })
 
-class Product extends Model<IProduct,IProduct> {
+class Product extends Model<IProduct, IProduct> {
 
     @Column({
         type: DataType.STRING(100)
@@ -43,11 +43,11 @@ class Product extends Model<IProduct,IProduct> {
     image: string
 
     @Column({
-        type: DataType.ENUM('reposteria','decoracion','carnaval','globos','golosinas','souvenirs','decoracion Torta','combos','fiestas Patrias','disfrases'),
+        type: DataType.ENUM('reposteria', 'decoracion', 'carnaval', 'globos', 'golosinas', 'souvenirs', 'decoracion Torta', 'combos', 'fiestas Patrias', 'disfraces'),
     })
     category: string
 
-  
+
 }
 
 export default Product

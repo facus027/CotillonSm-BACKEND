@@ -69,33 +69,34 @@ export class ProductController {
         }
     }
 
-    static updateProduct = async (req:Request,res:Response) => {
-      
+    static updateProduct = async (req: Request, res: Response) => {
         try {
-            const {productId} = req.params
-            const product = await Product.findByPk(productId)
-            if(!product) {
+            const { productId } = req.params;
+            const product = await Product.findByPk(productId);
+    
+            if (!product) {
                 return res.status(404).json({
-                    error: 'Producto No Encontrado'
-                })
+                    error: 'Producto No Encontrado',
+                });
             }
-
-            // Actualizar
-            const newproduct=new Product()
-            newproduct.name = req.body.name
-            newproduct.description = req.body.description
-            newproduct.price = req.body.price
-            newproduct.image = product.dataValues.image
-            newproduct.category = req.body.category
-            newproduct.availability = req.body.availability
-            await product.update(newproduct)
-            await product.save()
-
-            res.send('Producto Actualizado')
+    
+            const { name, description, price, category, availability } = req.body;
+    
+            await product.update({
+                name: name || product.name, 
+                description: description || product.description,
+                price: price || product.price,
+                category: category || product.category,
+                availability: availability || product.availability,
+                image: product.image, 
+            });
+    
+            res.send('Producto Actualizado');
         } catch (error) {
-            res.status(500).json({ error : 'Hubo un Error'});
+            res.status(500).json({ error: 'Hubo un Error' });
         }
-    }
+    };
+    
 
     static updateProductAvailability = async (req:Request,res:Response) => {
       
@@ -149,7 +150,8 @@ export class ProductController {
         try {
             const products = await Product.findAll({
                 where: {
-                    'category':category
+                    'category':category,
+                    
                 }
             })
            
