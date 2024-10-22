@@ -43,7 +43,8 @@ export class OrderController {
         try {
             const order = await Order.findOne({
                 where: {
-                    'cel': cel
+                    'cel': cel,
+                    'status':'pendiente'
                 }
             })
             if (!order) {

@@ -36,6 +36,7 @@ export class ProductController {
       
         try {
           const { rows: products, count: totalItems } = await Product.findAndCountAll({
+            where:{'availability':true},
             limit,
             offset,
           });
@@ -151,7 +152,7 @@ export class ProductController {
             const products = await Product.findAll({
                 where: {
                     'category':category,
-                    
+                    'availability':true
                 }
             })
            
