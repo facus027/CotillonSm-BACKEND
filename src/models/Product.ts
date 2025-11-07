@@ -43,7 +43,7 @@ class Product extends Model<IProduct, IProduct> {
     image: string
 
     @Column({
-        type: DataType.ENUM('reposteria', 'decoracion', 'carnaval', 'globos', 'golosinas', 'souvenirs', 'decoracion Torta', 'combos', 'fiestas Patrias', 'disfraces','pascua'),
+        type: DataType.ENUM('reposteria', 'decoracion', 'carnaval', 'globos', 'golosinas', 'souvenirs', 'decoracion Torta', 'combos', 'fiestas Patrias', 'disfraces','pascua','navidad'),
     })
     category: string
 
