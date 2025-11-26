@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  api:
+    build: .
+    container_name: cotillonsm-api
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"   # IP_HETZNER:3000 → contenedor:3000
+    networks:
+      - cotillonsm-net
+
+  db:
+    image: postgres:16-alpine
+    container_name: cotillonsm-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: cotillonsm
+      POSTGRES_USER: cotillonsm
+      POSTGRES_PASSWORD: cotillonorbit07
+    volumes:
+      - cotillonsm_db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"   # IP_HETZNER:5432 para conectarte desde tu PC (opcional)
+    networks:
+      - cotillonsm-net
+
+networks:
+  cotillonsm-net:
+
+volumes:
+  cotillonsm_db_data:
