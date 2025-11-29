@@ -1,15 +1,4 @@
 api.cotillonsanmartin.com.ar {
     reverse_proxy api:3000
 
-    header {
-        Access-Control-Allow-Origin "https://cotillonsanmartin.com.ar"
-        Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
-        Access-Control-Allow-Headers "*"
-        Access-Control-Allow-Credentials true
-    }
-
-    @preflight {
-        method OPTIONS
-    }
-    respond @preflight 204
 }
